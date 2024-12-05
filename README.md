@@ -38,7 +38,7 @@ There are other projects hosted :
 
 ---
 
-# Teachs programming
+# Teaches programming
  - Introduce basic structures : Sequence, selection, iteration
  - Introduce python syntax : print, def
  - Introduce python data structures and types (casting) : int, list
