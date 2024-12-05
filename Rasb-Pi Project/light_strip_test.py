@@ -42,4 +42,6 @@ get_perc_score = lambda x: round(((15-x)/15*100), 1)  # Calculate the percentage
 t_led = int(input("Enter the target LED (0 to 14 inclusive): "))  # Get the target LED from the user
 raw_score = bounce_mode(DELTA_SPEED, t_led)  # Start the game on bounce setting
 print("Score: ", get_perc_score(raw_score))  # Print the score
-clearLEDs()  # Seset lights when finished
+clearLEDs()  # Reset lights when finished
+
+# Reese : Gorgeous RPI code
