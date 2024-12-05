@@ -16,7 +16,6 @@ There are other projects hosted :
  - Movement / Physic - A series of games or simulations include different ways sprites can move based on different physics which is preset but users can change these default values and inspect the code to experiment
  - Animations demonstration - Users can change animation speed and size
  - Teaches programming - Demonstrates basic constructs and ideas of programming and gets users to complete different programming challenges based on difficulty like Time2Code or Parson's Problems
- - OOP - Explains basics of python style OOP paradigm
  - A-Level OCR CS Year 1 algorithms - Visualises sorting and searching of data for users
  - Sam's RPI project, see above for details.
 
@@ -43,13 +42,6 @@ There are other projects hosted :
  - Introduce python data structures and types (casting) : int, list
  - Demonstrate use of structure in examples
  - Sets of mini codes users can create using blocks and then typing
-
-# OOP
- - Introduce python OOP concepts
-   - Inheritance and classes
-   - Abstraction
-   - Data hiding
-   - Polymorphism
 
 # Algorithms
 ## Search algorithms
