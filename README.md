@@ -9,7 +9,7 @@ Things people may want to know more about :
  - Theory in lessons
 There are other projects hosted : 
  - Reese's fighting game - Larger program in pygame which users can play with or ask about development/use of pygame, not included with the repo
- - Sam's RPI project allows people PLEASE FILL THIS OUT SAM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ - Sam's RPI project allows people to play a game involving a light strip and a light gate. A dot would move back and forth along the strip, and players would have to trigger the light gate as close to the target dot as possible. Could use multiple rounds with changing patterns for the light. Run on a Pico.
 
 # Requirements
  - Majority of programs will use Pygame to handle UI related aspects
