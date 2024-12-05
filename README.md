@@ -1,4 +1,4 @@
-# SINSF-shocase-scripts
+# SINSF-showcase-scripts
 Some simple programs which will be demonstrated and used to teach programming to people visiting the Sir Issac Newton Sixth Form.
 There are a number of programs made based on different categories which will teach or demonstrate different aspects of programming.
 Things people may want to know more about :
@@ -17,7 +17,6 @@ There are other projects hosted :
  - Animations demonstration - Users can change animation speed and size
  - Teaches programming - Demonstrates basic constructs and ideas of programming and gets users to complete different programming challenges based on difficulty like Time2Code or Parson's Problems
  - OOP - Explains basics of python style OOP paradigm
- - Functional programming - Explains basics of python style functional programming
  - A-Level OCR CS Year 1 algoritms - Visualises sorting and searching of data for users
  - Sam's RPI project, see above for details.
 
@@ -52,17 +51,9 @@ There are other projects hosted :
    - Data hiding
    - Polymorphism
 
-# Functional programming
- - Introduce python functional concepts
-   - Lambda
-   - Map & filter
-   - Generators
-   - Decorators
-   - Recursion
-
 # Algorithms
 ## Search algorithms
- - Explains how the search works and then steps through the search by action
+ - Explains how the search works and then steps through
  - Linear search
  - Binary search
 
