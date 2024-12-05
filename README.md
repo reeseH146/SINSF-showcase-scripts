@@ -19,7 +19,7 @@ There are other projects hosted :
  - OOP - Explains basics of python style OOP paradigm
  - Functional programming - Explains basics of python style functional programming
  - A-Level OCR CS Year 1 algoritms - Visualises sorting and searching of data for users
- - Sam's RPI projetc - FILL THIS OUT SAM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ - Sam's RPI project, see above for details.
 
 ---
 
