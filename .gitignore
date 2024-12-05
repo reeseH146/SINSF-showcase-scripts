@@ -1,0 +1,6 @@
+# Ignores unneccesary files
+
+# Ignores these folders
+__pycache__/
+.idea/
+.xml/
