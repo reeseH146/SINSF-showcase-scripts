@@ -12,8 +12,7 @@ if not pg.get_init():
 
 # Loads general data
 # Default fonts
-DefaultFont = "Other assets\Agdasima\Agdasima-Regular.ttf"
-AlternativeFont = "freesansbold.ttf"
+DefaultFont = "freesansbold.ttf"
 
 # --- Text generator ---
 """
@@ -21,7 +20,7 @@ Font class takes various arguments to create and instance of text and rectangle 
 This simplifies the use of fonts throughout the game after creation
 """
 class TextGen:
-    def __init__(self, size, text, antialias, textColour, centrePosX, centrePosY):
+    def __init__(self, size, text, textColour, centrePosX, centrePosY, antialias = True):
         self.font = pg.font.Font(DefaultFont, size)
         self.text = self.font.render(text, antialias, textColour[1], textColour[0])
         self.rect = self.text.get_rect()
