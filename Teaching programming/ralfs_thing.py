@@ -1,3 +1,4 @@
+#Calculates the pay for a drone pilot depending on their total miles and years of experience#
 experience=float(input("Enter your years of experience:"))
 miles=float(input("Enter miles flown:"))
 totalpay=0
@@ -22,3 +23,23 @@ elif experience<2 and experience>= 5:
 
 else:
     print(more_than_five())
+
+
+#Converts Gigabytes.Megabytes and Kilobytes into Bytes#
+size=input("Gigabyte , Megabyte or Kilobyte ?:")
+amount=float(input("How many do you have?:"))
+
+if size=="Gigabyte":
+    value=(amount*1024*1024*1024*8)
+    print(value,"bytes")
+
+elif size=="Megabyte":
+    value=(amount*1024*1024*8)
+    print(value,"bytes")
+
+elif size=="Kilobyte":
+    value=(amount*1024*8)
+    print(value,"bytes")
+
+else:
+    print(-1)
