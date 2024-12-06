@@ -58,4 +58,4 @@ There are other projects hosted :
 # Workflow and rules
  - When editing any files in global scope in main pull request the changes instead of pushing and commiting
  - Only Reese and Sam are allowed to push and commit any changes
- - Other contributors cannot change README files and can only edit the "Teaching programming" folder
+ - Other contributors cannot change README files and can only edit the "Teaching programming" folder 
