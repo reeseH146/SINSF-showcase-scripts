@@ -14,7 +14,5 @@
  - Animation ideas : 
    - Wave
    - Bouncing ball
-   - Moon walking
-     - Cam movement demo - Circular, Pear, Snail drop, Heart drop
    - Duck waddling
    - Trig waves - San, Cos, Trig
