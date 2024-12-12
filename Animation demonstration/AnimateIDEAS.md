@@ -12,7 +12,8 @@
  - Program will have to load different animations
 
  - Animation ideas : 
-   - Wave
-   - Bouncing ball
-   - Duck waddling
-   - Trig waves - San, Cos, Trig
+   - Wave - Crashing ocean wave which curls into itself
+   - Bouncing ball - Ball will have air trail and can deform/stretch in animation
+   - Trig waves - San, Cos, Trig, placement cannot be changed
+
+# Was going to have other animations like cams, duck waddling and non ASCII doughnut but too much work
