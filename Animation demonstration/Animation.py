@@ -39,7 +39,7 @@ Position update
  - Animation.LocUpdate() called to update location, based on user input or program calculated location 
 """
 class Animation:
-    def __init__(self, SSheet, Loc : [], Size : (), ScaleLim : (), Speed : int, Increment : float, MaxFrame : int, Move = False):
+    def __init__(self, SSheet, Loc : [], Size : (), ScaleLim : (), Speed : float, Increment : float, MaxFrame : int, Move = False):
         # SSheet and attributes
         self.SSheet = SSheet
         self.Loc = Loc
@@ -53,6 +53,7 @@ class Animation:
         self.MaxFrame = MaxFrame
         self.Image = pg.Surface(self.Size)
         self.rect = self.Image.get_rect()
+        self.rect.center = (self.Loc[0], self.Loc[1])
 
     def AniUpdate(self):
         """
@@ -67,32 +68,41 @@ class Animation:
         if self.Frame > self.MaxFrame: # Checks if frame is above total sprites and resets if so
             self.Frame = 0
         # Updates Window and animation frame
-        Window.fill((0, 0, 0))
         Window.blit(self.Image, self.rect)
 
-    def LocUpdate(self, Direction = "", UpdateByDirection = True, Position = (0, 0)):
+    def LocUpdate(self, Direction = "", Position = (0, 0)):
         if self.Move:
-            if UpdateByDirection:
-                if Direction == "w": # Updates vertical position
-                    self.Loc[1] -= self.Speed
-                elif Direction == "a": # Updates horizontal position
-                    self.Loc[0] -= self.Speed
-                elif Direction == "s": # Updates vertical position
-                    self.Loc[1] += self.Speed
-                elif Direction == "d": # Updates horizontal position
-                    self.Loc[0] += self.Speed
-            else:
+            if Direction == "w": # Updates vertical position
+                self.Loc[1] -= self.Speed
+            elif Direction == "a": # Updates horizontal position
+                self.Loc[0] -= self.Speed
+            elif Direction == "s": # Updates vertical position
+                self.Loc[1] += self.Speed
+            elif Direction == "d": # Updates horizontal position
+                self.Loc[0] += self.Speed
+            elif Direction == "": # Changes position if movement enabled
                 self.Loc = Position
-            # Updates Window and animation in new position
-            self.rect.center = (self.Loc[0], self.Loc[1])
-            Window.fill((0, 0, 0))
-            Window.blit(self.Image, self.rect)
+        elif Direction == "": # Changes position if movement disabled
+            self.Loc = Position
+        # Updates Window and animation in new position
+        self.rect.center = (self.Loc[0], self.Loc[1])
+        Window.fill(MAINCOLOUR)
+        pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
+        Window.blit(self.Image, self.rect)
 
     def SizeUpdate(self, Scale):
         if self.ScaleLim[0] <= Scale <= self.ScaleLim[1]:
-            self.size = (self.Size[0] * Scale, self.Size[1] * Scale)
-            #self.Image = pg.Surface(self.size)
-            self.SSheet = pg.transform.scale_by(self.SSheet, Scale, self.Image)
+            self.Size = (self.Size[0] * Scale, self.Size[1] * Scale)
+            self.Image = pg.Surface(self.Size)
+            self.SSheet = pg.transform.scale_by(self.SSheet, Scale)
+
+    def PosCheck(self, MPos):
+        if (self.rect[0] < MPos[0] < self.rect[0] + self.rect[2]) and (self.rect[1] < MPos[1] < self.rect[1] + self.rect[3]):
+            return True
+        else:
+            return False
+
+
 
 
 """---"""
@@ -102,15 +112,19 @@ def MainMenu():
     # Loads the main menu visual assets and interactive assets
     Window.fill(MAINCOLOUR)
     pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
+    AniTest.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])
+    AniTest.AniUpdate()
+    pg.display.update()
     """
     MenuTitle.render()
-    Tutorial.render()
+    TutorialBTN.render()
     ATestBTN.render()
     AWaveBTN.render()
     ABounceBallBTN.render()
     ATrigWaveBTN.render()
     """
-    while True:
+    Running = True
+    while Running:
         # Loops through the event queue checking for any events, mainly user input
         for event in pg.event.get():
             # Quits the game if user clicks on close window button (X)
@@ -121,20 +135,19 @@ def MainMenu():
                 quit()
             # Checks mouse button has been lifted and that it is the left mouse button
             elif (event.type == MOUSEBUTTONDOWN) and (pg.mouse.get_pressed()[0]):
+                # Grabs the position of the mouse to check if it is within any buttons
                 MousePosition = pg.mouse.get_pos()
-                print(2)
-
-        pg.display.update()
+                # Brings user to a tutorial page which shows how the program works and how 2D animation works using sprite strip
+                """"""
+                # Brings user to game which showcases the animations depending on which one they selected
+                if AniTest.PosCheck(MousePosition):
+                    MainGame()
         Clock.tick(60)
 
 # --- Main Game ---
 def MainGame():
-    Window.fill(MAINCOLOUR)
-    pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
     ## Makes some checks and updates the window to show information to the user
-
-
-
+    pg.display.update()
     Running = True
     while Running:
         # Loops through the event queue checking for any events, mainly user input
@@ -147,29 +160,30 @@ def MainGame():
                 pg.quit()
                 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
                 quit()
-
-            # Returns to MainMenu is ESC is pressed
-            if Events[K_ESCAPE]:
+            elif Events[K_ESCAPE]:
                 MainMenu()
-            # Changes animation speed if user clicks Left/Right Arrow
-            elif Events[K_LEFT]: # Decrease speed
-                pass
-            elif Events[K_RIGHT]: # Increase speed
-                pass
-            # Changes size of animation in place with Up/Down Arrow
-            elif Events[K_UP]:
-                pass
-            elif Events[K_DOWN]:
-                pass
-            # Resets position of animation to centre
-            elif Events[K_SPACE]:
-                pass
-
+            elif Events[K_TAB]:
+                AniTest.LocUpdate("")#, False, [32, 32])
+            if Events[K_w]:
+                AniTest.LocUpdate("w")
+                print("Moved up")
+            if Events[K_a]:
+                AniTest.LocUpdate("a")
+                print("Moved left")
+            if Events[K_s]:
+                AniTest.LocUpdate("s")
+                print("Moved down")
+            if Events[K_d]:
+                AniTest.LocUpdate("d")
+                print("Moved right")
+            if Events[K_UP]:
+                AniTest.SizeUpdate(1.1)
         # Updates the sprite
-
-
-    pg.display.update()
-    Clock.tick(60)
+        Window.fill(MAINCOLOUR)
+        pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
+        AniTest.AniUpdate()
+        pg.display.update()
+        Clock.tick(60)
 
 # --- Main ---
 print(f"{'':-^42}\n{' Program loaded : Please enjoy playing  ':-^42}\n{'':-^42}") # Cursed mono line alignment
@@ -194,21 +208,9 @@ WellcomeMsg.render(Window) # Places a welcome message onto the window for the us
 pg.display.update() # Updates the differences in the window since last update/creation so user can see changes
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
-## Loads game assets and processes (input checking interval, text)
-pg.key.set_repeat(200, 100) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
-ExitMSG = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
-"""
-MenuTitle = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Top centre of window
-TutorialButton = PGUI.ImgButton(Image, X, Y)
-ATestBTN = PGUI.ImgButton()
-AWaveBTN = PGUI.ImgButton()
-ABounceBallBTN = PGUI.ImgButton()
-ATrigWaveBTN = PGUI.ImgButton()
-"""
-
 ## Animation section - Loads spritesheets and assigns it to an animation class to process the spritesheet and animate it
 SSTest = pg.image.load("SpriteSheets\pixil-frame-0 (2).png")
-AniTest = Animation(SSTest, [32, 32], (64, 64), 10, 0.1, 10, True)
+AniTest = Animation(SSTest, [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)], (64, 64), (1, 10), 15, 0.1, 10, True)
 """
 SSWave = pg.image.load("SpriteSheets\SSWave.png")
 AniWave = Animation(SSWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10) 
@@ -218,9 +220,16 @@ SSTrigWave = pg.image.load("SpriteSheets\SSWave.png")
 AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10)
 """
 
+## Loads game assets and processes (input checking interval, text)
+pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
+ExitMSG = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
+MenuTitle = PGUI.TextGen(50, "Please select an animation or press \"?\" to explain how an animation works.", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Top centre of window
+"""
+TutorialBTN = PGUI.ImgButton(Image, X, Y)
+"""
+
 ## Main game
 MainMenu()
-MainGame()
 
 ## Exits the program
 pg.Surface.fill(Window, MAINCOLOUR) # Fills the window ith a solid colour
