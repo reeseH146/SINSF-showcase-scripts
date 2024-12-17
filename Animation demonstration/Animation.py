@@ -71,7 +71,7 @@ class Animation:
         self.FrameCounter = PGUI.TextGen(40, f"{int(self.Frame)}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
         # Updates Window and animation frame
         Window.blit(self.Image, self.rect)
-        self.FrameCounter.render(Window)
+        self.FrameCounter.Render(Window)
 
     def LocUpdate(self, Direction = "", Position = (0, 0)):
         if self.Move: # Checks movement is enabled
@@ -133,9 +133,14 @@ def MainMenu():
         # Loops through the event queue checking for any events, mainly user input
         for event in pg.event.get():
             # Quits the game if user clicks on close window button (X)
-            if (event.type == QUIT) or (pg.key == K_ESCAPE):
+            if (event.type == QUIT) or (pg.key.get_pressed()[K_ESCAPE]):
                 Running = False
-                pg.quit()
+                pg.Surface.fill(Window, MAINCOLOUR) # Fills the window ith a solid colour
+                pg.draw.rect(Window, ACCENTCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10) # Draws an empty rectangle as the window border
+                ExitMSG.Render(Window) # Renders text object onto the window
+                pg.display.update() # Updates the window so that user can see changes from previous window update
+                pg.time.wait(700) # Pauses the program for 0.7s
+                pg.quit() # Exits pygame
                 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
                 quit()
             # Checks mouse button has been lifted and that it is the left mouse button
@@ -162,7 +167,12 @@ def MainGame():
             # Quits the game if user clicks on close window button (X)
             if event.type == QUIT:
                 Running = False
-                pg.quit()
+                pg.Surface.fill(Window, MAINCOLOUR) # Fills the window ith a solid colour
+                pg.draw.rect(Window, ACCENTCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10) # Draws an empty rectangle as the window border
+                ExitMSG.Render(Window) # Renders text object onto the window
+                pg.display.update() # Updates the window so that user can see changes from previous window update
+                pg.time.wait(700) # Pauses the program for 0.7s
+                pg.quit() # Exits pygame
                 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
                 quit()
             elif Events[K_ESCAPE]: # Returns back to main menu
@@ -213,7 +223,7 @@ pg.display.set_caption("Animation Demonstration") # Sets window caption of what 
 Window = pg.display.set_mode(WINSIZE) # Creates the window
 pg.Surface.fill(Window, MAINCOLOUR) # Fills window with a background colour
 pg.draw.rect(Window, ACCENTCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10) # Draws an empty rectangle as the window border
-WellcomeMsg.render(Window) # Places a welcome message onto the window for the user
+WellcomeMsg.Render(Window) # Places a welcome message onto the window for the user
 pg.display.update() # Updates the differences in the window since last update/creation so user can see changes
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
@@ -243,7 +253,7 @@ MainMenu()
 ## Exits the program
 pg.Surface.fill(Window, MAINCOLOUR) # Fills the window ith a solid colour
 pg.draw.rect(Window, ACCENTCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10) # Draws an empty rectangle as the window border
-ExitMSG.render(Window) # Renders text object onto the window
+ExitMSG.Render(Window) # Renders text object onto the window
 pg.display.update() # Updates the window so that user can see changes from previous window update
 pg.time.wait(700) # Pauses the program for 0.7s
 pg.quit() # Exits pygame
