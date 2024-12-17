@@ -39,13 +39,11 @@ Position update
  - Animation.LocUpdate() called to update location, based on user input or program calculated location 
 """
 class Animation:
-    def __init__(self, SSheet, Loc : [], Size : (), ScaleLim : (), Speed : float, Increment : float, MaxFrame : int, Move = False):
+    def __init__(self, SSheet, Loc : [], Size : (), Speed : float, Increment : float, MaxFrame : int, Move = False):
         # SSheet and attributes
         self.SSheet = SSheet # Spritesheet
         self.Loc = Loc # Location of the animation object
         self.Size = Size # Array of the size of each frame
-        self.Scale = 1 # Scale of frame to output
-        self.ScaleLim = ScaleLim # Limit the
         self.Move = Move
         # Animation attributes
         self.Speed = Speed
@@ -96,21 +94,6 @@ class Animation:
         Window.blit(self.Image, self.rect)
         print(f"Location updated : {self.Loc}")
 
-    def SizeUpdate(self, Scale):
-        # Checks the new scale is within boundary
-        TempScale = self.Scale * Scale # Multiplies the current scale by the input scale+
-        if self.Scale < self.ScaleLim[0]: # Checks th scale is not less than limit otherwise sets it as the limit
-            TempScale = self.ScaleLim[0]
-        elif self.ScaleLim[1] < self.Scale: # Checks th scale is not greater than limit otherwise sets it as the limit
-            TempScale = self.ScaleLim[1]
-        # Sets the new image and surface size
-        self.Scale = TempScale # Sets new scale after scale has been checked in bounds
-        self.Size = (self.Size[0] * self.Scale, self.Size[1] * self.Scale) # Updates the size of the image
-        self.Image = pg.Surface(self.Size) # Sets the surface with new size
-        self.SSheet = pg.transform.scale_by(self.SSheet, Scale) # Multiplies the sheet by param scale
-        self.Image.blit(self.SSheet, (0, 0, self.Size[0], self.Size[1]))
-        print(f"Scale updated : {self.Scale}")
-
     def PosCheck(self, MPos):
         # Checks if the mouse position is within the x range and y range of character clicked
         if (self.rect[0] < MPos[0] < self.rect[0] + self.rect[2]) and (self.rect[1] < MPos[1] < self.rect[1] + self.rect[3]):
@@ -128,11 +111,6 @@ class Animation:
             if 0 <= (self.Increment - SpeedChange):
                 self.Increment -= SpeedChange
                 print(f"Speed decreased by {SpeedChange} to {self.Increment}")
-
-
-
-
-"""---"""
 
 # --- Main Menu ---
 def MainMenu():
@@ -204,11 +182,6 @@ def MainGame():
             if Events[K_d]:
                 AniTest.LocUpdate("d")
                 print("Moved right")
-            # Changes the scale of animation object with vertical arrows
-            if Events[K_UP]:
-                AniTest.SizeUpdate(1.1)
-            elif Events[K_DOWN]:
-                AniTest.SizeUpdate(0.9)
             # Changes the speed which the animation plays at
             if Events[K_LEFT]:
                 AniTest.PBSpeedUpdate(0.01, False) # Decreases animation playback speed
@@ -246,7 +219,7 @@ pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
 ## Animation section - Loads spritesheets and assigns it to an animation class to process the spritesheet and animate it
 SSTest = pg.image.load("SpriteSheets\pixil-frame-0 (2).png")
-AniTest = Animation(SSTest, [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)], (64, 64), (1, 10), 15, 0.1, 10, True)
+AniTest = Animation(SSTest, [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)], (64, 64), 15, 0.1, 10, True)
 """
 SSWave = pg.image.load("SpriteSheets\SSWave.png")
 AniWave = Animation(SSWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10) 
