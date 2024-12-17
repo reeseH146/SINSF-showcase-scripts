@@ -20,18 +20,22 @@ Font class takes various arguments to create and instance of Text and rectangle 
 This simplifies the use of fonts throughout the game after creation
 """
 class TextGen:
-    def __init__(self, Size, Text, TextColour, BGColour, MidPosX, MidPosY, Antialias = True):
+    def __init__(self, Size, Text, TextColour, BGColour, MidPosX, MidPosY, Antialias = True, Center = True):
         self.font = pg.font.Font(DefaultFont, Size)
         self.Text = self.font.render(Text, Antialias, TextColour, BGColour)
         self.rect = self.Text.get_rect()
-        self.rect.center = (MidPosX, MidPosY)
+        if Center:
+            self.rect.center = (MidPosX, MidPosY)
+        else:
+            self.rect[0] = MidPosX
+            self.rect[1] = MidPosY
         self.originX = self.rect[0]
         self.originY = self.rect[1]
         self.endX = self.originX + self.rect[2]
         self.endY = self.originY + self.rect[3]
 
     # Renders the Text onto the screen
-    def render(self, Window):
+    def Render(self, Window):
         Window.blit(self.Text, self.rect)
 
 # --- Button Text generator ---
@@ -66,16 +70,16 @@ class ImgButton:
         self.Image = Image
         self.rect = self.Image.get_rect()
         self.rect.center = (MidPosX, MidPosY)
-        self.originX = self.rect[0]
-        self.originY = self.rect[1]
-        self.endX = self.originX + self.rect[2]
-        self.endY = self.originY + self.rect[3]
+        self.OriginX = self.rect[0]
+        self.OriginY = self.rect[1]
+        self.EndX = self.OriginX + self.rect[2]
+        self.EndY = self.OriginY + self.rect[3]
 
     # Renders the button onto the screen
-    def render(self, Window):
+    def Render(self, Window):
         Window.blit(self.Image, self.rect)
 
     # Checks whether the input is within the button parameters
-    def positionCheck(self, MousePos):
-        if (self.originX < MousePos[0] < self.endX) and (self.originY < MousePos[1] < self.endY):
+    def PosCheck(self, MousePos):
+        if (self.OriginX < MousePos[0] < self.EndX) and (self.OriginY < MousePos[1] < self.EndY):
             return True
