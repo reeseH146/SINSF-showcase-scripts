@@ -41,10 +41,11 @@ Position update
 class Animation:
     def __init__(self, SSheet, Loc : [], Size : (), ScaleLim : (), Speed : float, Increment : float, MaxFrame : int, Move = False):
         # SSheet and attributes
-        self.SSheet = SSheet
-        self.Loc = Loc
-        self.Size = Size
-        self.ScaleLim = ScaleLim
+        self.SSheet = SSheet # Spritesheet
+        self.Loc = Loc # Location of the animation object
+        self.Size = Size # Array of the size of each frame
+        self.Scale = 1 # Scale of frame to output
+        self.ScaleLim = ScaleLim # Limit the
         self.Move = Move
         # Animation attributes
         self.Speed = Speed
@@ -54,6 +55,8 @@ class Animation:
         self.Image = pg.Surface(self.Size)
         self.rect = self.Image.get_rect()
         self.rect.center = (self.Loc[0], self.Loc[1])
+        self.FrameCounter = PGUI.TextGen(40, f"{self.Frame}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
+        print(f"Animation object created : {self.SSheet}")
 
     def AniUpdate(self):
         """
@@ -67,11 +70,13 @@ class Animation:
         self.Frame += self.Increment # Increments frame
         if self.Frame > self.MaxFrame: # Checks if frame is above total sprites and resets if so
             self.Frame = 0
+        self.FrameCounter = PGUI.TextGen(40, f"{int(self.Frame)}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
         # Updates Window and animation frame
         Window.blit(self.Image, self.rect)
+        self.FrameCounter.render(Window)
 
     def LocUpdate(self, Direction = "", Position = (0, 0)):
-        if self.Move:
+        if self.Move: # Checks movement is enabled
             if Direction == "w": # Updates vertical position
                 self.Loc[1] -= self.Speed
             elif Direction == "a": # Updates horizontal position
@@ -89,18 +94,40 @@ class Animation:
         Window.fill(MAINCOLOUR)
         pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
         Window.blit(self.Image, self.rect)
+        print(f"Location updated : {self.Loc}")
 
     def SizeUpdate(self, Scale):
-        if self.ScaleLim[0] <= Scale <= self.ScaleLim[1]:
-            self.Size = (self.Size[0] * Scale, self.Size[1] * Scale)
-            self.Image = pg.Surface(self.Size)
-            self.SSheet = pg.transform.scale_by(self.SSheet, Scale)
+        # Checks the new scale is within boundary
+        TempScale = self.Scale * Scale # Multiplies the current scale by the input scale+
+        if self.Scale < self.ScaleLim[0]: # Checks th scale is not less than limit otherwise sets it as the limit
+            TempScale = self.ScaleLim[0]
+        elif self.ScaleLim[1] < self.Scale: # Checks th scale is not greater than limit otherwise sets it as the limit
+            TempScale = self.ScaleLim[1]
+        # Sets the new image and surface size
+        self.Scale = TempScale # Sets new scale after scale has been checked in bounds
+        self.Size = (self.Size[0] * self.Scale, self.Size[1] * self.Scale) # Updates the size of the image
+        self.Image = pg.Surface(self.Size) # Sets the surface with new size
+        self.SSheet = pg.transform.scale_by(self.SSheet, Scale) # Multiplies the sheet by param scale
+        self.Image.blit(self.SSheet, (0, 0, self.Size[0], self.Size[1]))
+        print(f"Scale updated : {self.Scale}")
 
     def PosCheck(self, MPos):
+        # Checks if the mouse position is within the x range and y range of character clicked
         if (self.rect[0] < MPos[0] < self.rect[0] + self.rect[2]) and (self.rect[1] < MPos[1] < self.rect[1] + self.rect[3]):
-            return True
+            print(f"Button clicked at {MPos}")
+            return True # True if mouse pos in button range
         else:
-            return False
+            print(f"Button clicked at {MPos}")
+            return False # False if mouse pos not in button range
+
+    def PBSpeedUpdate(self, SpeedChange, IncrDecr):
+        if IncrDecr: # True for increasing
+            self.Increment += SpeedChange
+            print(f"Speed increased by {SpeedChange} to {self.Increment}")
+        else: # False for decreasing
+            if 0 <= (self.Increment - SpeedChange):
+                self.Increment -= SpeedChange
+                print(f"Speed decreased by {SpeedChange} to {self.Increment}")
 
 
 
@@ -160,10 +187,11 @@ def MainGame():
                 pg.quit()
                 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
                 quit()
-            elif Events[K_ESCAPE]:
+            elif Events[K_ESCAPE]: # Returns back to main menu
                 MainMenu()
-            elif Events[K_TAB]:
-                AniTest.LocUpdate("")#, False, [32, 32])
+            elif Events[K_TAB]: # Brings animation object to the center of the screen
+                AniTest.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])#, False, [32, 32])
+            # Changes position of the animation object based on direction
             if Events[K_w]:
                 AniTest.LocUpdate("w")
                 print("Moved up")
@@ -176,8 +204,16 @@ def MainGame():
             if Events[K_d]:
                 AniTest.LocUpdate("d")
                 print("Moved right")
+            # Changes the scale of animation object with vertical arrows
             if Events[K_UP]:
                 AniTest.SizeUpdate(1.1)
+            elif Events[K_DOWN]:
+                AniTest.SizeUpdate(0.9)
+            # Changes the speed which the animation plays at
+            if Events[K_LEFT]:
+                AniTest.PBSpeedUpdate(0.01, False) # Decreases animation playback speed
+            elif Events[K_RIGHT]:
+                AniTest.PBSpeedUpdate(0.01, True) # Increases animation playback speed
         # Updates the sprite
         Window.fill(MAINCOLOUR)
         pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
