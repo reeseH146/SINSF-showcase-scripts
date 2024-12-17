@@ -39,7 +39,7 @@ Position update
  - Animation.LocUpdate() called to update location, based on user input or program calculated location 
 """
 class Animation:
-    def __init__(self, SSheet, Loc : [], Size : (), Speed : float, Increment : float, MaxFrame : int, Move = False):
+    def __init__(self, SSheet, Loc : [], Size : (), Speed : float, Increment : float, SpeedChange : float, MaxFrame : int, Move = False):
         # SSheet and attributes
         self.SSheet = SSheet # Spritesheet
         self.Loc = Loc # Location of the animation object
@@ -49,6 +49,7 @@ class Animation:
         self.Speed = Speed
         self.Frame = 0
         self.Increment = Increment
+        self.SpeedChange = SpeedChange
         self.MaxFrame = MaxFrame
         self.Image = pg.Surface(self.Size)
         self.rect = self.Image.get_rect()
@@ -74,6 +75,7 @@ class Animation:
         self.FrameCounter.Render(Window)
 
     def LocUpdate(self, Direction = "", Position = (0, 0)):
+        # Makes checks to change position of animation object
         if self.Move: # Checks movement is enabled
             if Direction == "w": # Updates vertical position
                 self.Loc[1] -= self.Speed
@@ -87,6 +89,15 @@ class Animation:
                 self.Loc = Position
         elif Direction == "": # Changes position if movement disabled
             self.Loc = Position
+        # Resets animation object position to keep it in bounds
+        if self.Loc[0] <= (10 + (self.Size[0] // 2)): # If out of left x boundary
+            self.Loc[0] = (10 + (self.Size[0] // 2)) # Sets position to just touch left x boundary
+        elif self.Loc[0] >= ((WINSIZE[0]) - (self.Size[0] // 2)): # If out of right x boundary
+            self.Loc[0] = ((WINSIZE[0] - 10) - (self.Size[0] // 2)) # Sets position to just touch right x boundary
+        if self.Loc[1] <= (10 + (self.Size[1] // 2)): # If out of top y boundary
+            self.Loc[1] = (10 + (self.Size[1] // 2)) # Sets position to just touch top y boundary
+        elif self.Loc[1] >= ((WINSIZE[1]) - (self.Size[1] // 2)): # If out of bottom y boundary
+            self.Loc[1] = ((WINSIZE[1] - 10) - (self.Size[1] // 2)) # Sets position to just touch bottom y boundary
         # Updates Window and animation in new position
         self.rect.center = (self.Loc[0], self.Loc[1])
         Window.fill(MAINCOLOUR)
@@ -103,14 +114,14 @@ class Animation:
             print(f"Button clicked at {MPos}")
             return False # False if mouse pos not in button range
 
-    def PBSpeedUpdate(self, SpeedChange, IncrDecr):
+    def PBSpeedUpdate(self, IncrDecr):
         if IncrDecr: # True for increasing
-            self.Increment += SpeedChange
-            print(f"Speed increased by {SpeedChange} to {self.Increment}")
+            self.Increment += self.SpeedChange
+            print(f"Speed increased by {self.SpeedChange} to {self.Increment}")
         else: # False for decreasing
-            if 0 <= (self.Increment - SpeedChange):
-                self.Increment -= SpeedChange
-                print(f"Speed decreased by {SpeedChange} to {self.Increment}")
+            if 0 <= (self.Increment - self.SpeedChange):
+                self.Increment -= self.SpeedChange
+                print(f"Speed decreased by {self.SpeedChange} to {self.Increment}")
 
 # --- Main Menu ---
 def MainMenu():
@@ -194,9 +205,9 @@ def MainGame():
                 print("Moved right")
             # Changes the speed which the animation plays at
             if Events[K_LEFT]:
-                AniTest.PBSpeedUpdate(0.01, False) # Decreases animation playback speed
+                AniTest.PBSpeedUpdate(False) # Decreases animation playback speed
             elif Events[K_RIGHT]:
-                AniTest.PBSpeedUpdate(0.01, True) # Increases animation playback speed
+                AniTest.PBSpeedUpdate(True) # Increases animation playback speed
         # Updates the sprite
         Window.fill(MAINCOLOUR)
         pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
@@ -229,7 +240,12 @@ pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
 ## Animation section - Loads spritesheets and assigns it to an animation class to process the spritesheet and animate it
 SSTest = pg.image.load("SpriteSheets\pixil-frame-0 (2).png")
-AniTest = Animation(SSTest, [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)], (64, 64), 15, 0.1, 10, True)
+AniTestLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
+### Test Animation values and stuff
+AniTestSpeed = 15 # D15 - The distance the animation object can travel
+AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
+AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
+AniTest = Animation(SSTest, AniTestLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
 """
 SSWave = pg.image.load("SpriteSheets\SSWave.png")
 AniWave = Animation(SSWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10) 
