@@ -26,12 +26,12 @@ Main
  - Creates counter, increment, speed, spritesheet, sizes and location variable to keep track of animation attributes
  
 Animation update
- - Updates the counter
- - Updates the image on the surface according to the counter
+ - Updates the frame counter
+ - Updates the image on the surface according to counter
 
 Position update
- - Updates the position depending on direction/position input
- - Updates the position of surface on the display
+ - Updates position depending on direction/position input
+ - Updates position of surface on the display
 """
 """
  - Animation object is created with necessary parses
@@ -41,7 +41,7 @@ Position update
 class Animation:
     def __init__(self, SSheet, Loc : [], Size : (), Speed : float, Increment : float, SpeedChange : float, MaxFrame : int, Move = False):
         # SSheet and attributes
-        self.SSheet = SSheet # Spritesheet
+        self.SSheet = SSheet # Sprite sheet
         self.Loc = Loc # Location of the animation object
         self.Size = Size # Array of the size of each frame
         self.Move = Move
@@ -57,14 +57,12 @@ class Animation:
         self.FrameCounter = PGUI.TextGen(40, f"{self.Frame}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
         print(f"Animation object created : {self.SSheet}")
 
+    """ Updates the animation object
+    Updates frame    
+    Resets frame if exceeds last frame
+    Updates current frame of animation object
+    """
     def AniUpdate(self):
-        """
-        Blits section of SSheet onto Image.
-        Area(LeftX, TopY, XWideToRight, YTallToDown).
-        LeftX is the TL X of rect, which a sample of SSheet is taken. Frame * Size calculates position along the SSheet.
-        TopY is the TL Y of rect, which a sample of SSheet is taken.
-        XWideToRight and YTallToDown are height and width of rect.
-        """
         self.Image.blit(self.SSheet, (0, 0), (self.Size[0] * int(self.Frame), 0, self.Size[0], self.Size[1]))
         self.Frame += self.Increment # Increments frame
         if self.Frame > self.MaxFrame: # Checks if frame is above total sprites and resets if so
@@ -74,6 +72,11 @@ class Animation:
         Window.blit(self.Image, self.rect)
         self.FrameCounter.Render(Window)
 
+    """ Updates position of animation object
+    Checks the type of movement and whether movement is enabled
+    Moves the object a set distance in a chosen direction or moves them to a specified position
+    Checks the final location and resets it to touch the boundary
+    """
     def LocUpdate(self, Direction = "", Position = (0, 0)):
         # Makes checks to change position of animation object
         if self.Move: # Checks movement is enabled
@@ -105,6 +108,9 @@ class Animation:
         Window.blit(self.Image, self.rect)
         print(f"Location updated : {self.Loc}")
 
+    """ Checks for user input on animation object
+    Checks if mouse is within the x bound and y bound of the animation
+    """
     def PosCheck(self, MPos):
         # Checks if the mouse position is within the x range and y range of character clicked
         if (self.rect[0] < MPos[0] < self.rect[0] + self.rect[2]) and (self.rect[1] < MPos[1] < self.rect[1] + self.rect[3]):
@@ -114,6 +120,11 @@ class Animation:
             print(f"Button clicked at {MPos}")
             return False # False if mouse pos not in button range
 
+    """ Updates animation speed
+    Checks whether it is increasing or decreasing
+    Changes by a set amount
+    There is a limit to decreasing so that it can only pause and not go to negative speed
+    """
     def PBSpeedUpdate(self, IncrDecr):
         if IncrDecr: # True for increasing
             self.Increment += self.SpeedChange
@@ -130,10 +141,9 @@ def MainMenu():
     pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
     AniTest.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])
     AniTest.AniUpdate()
+    MenuTitle.Render(Window)
     pg.display.update()
     """
-    MenuTitle.render()
-    TutorialBTN.render()
     ATestBTN.render()
     AWaveBTN.render()
     ABounceBallBTN.render()
@@ -238,7 +248,7 @@ WellcomeMsg.Render(Window) # Places a welcome message onto the window for the us
 pg.display.update() # Updates the differences in the window since last update/creation so user can see changes
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
-## Animation section - Loads spritesheets and assigns it to an animation class to process the spritesheet and animate it
+## Animation section - Loads sprite sheets and assigns it to an animation class to process the sprite sheet and animate it
 SSTest = pg.image.load("SpriteSheets\pixil-frame-0 (2).png")
 AniTestLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
@@ -247,10 +257,8 @@ AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniTest = Animation(SSTest, AniTestLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
 """
-SSWave = pg.image.load("SpriteSheets\SSWave.png")
-AniWave = Animation(SSWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10) 
 SSBounceBall = pg.image.load("SpriteSheets\SSWave.png")
-AniBounceBall = Animation(SSBounceBall, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10) 
+AniBounceBall = Animation(SSBounceBall, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10, True) 
 SSTrigWave = pg.image.load("SpriteSheets\SSWave.png")
 AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10)
 """
@@ -258,15 +266,11 @@ AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
 ExitMSG = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
-MenuTitle = PGUI.TextGen(50, "Please select an animation or press \"?\" to explain how an animation works.", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Top centre of window
-"""
-TutorialBTN = PGUI.ImgButton(Image, X, Y)
-"""
+MenuTitle = PGUI.TextGen(40, "Please select an animation", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, 35) # Top centre of window
 
 ## Main game
 MainMenu()
-
-## Exits the program
+# Exits the program
 pg.Surface.fill(Window, MAINCOLOUR) # Fills the window ith a solid colour
 pg.draw.rect(Window, ACCENTCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10) # Draws an empty rectangle as the window border
 ExitMSG.Render(Window) # Renders text object onto the window
