@@ -19,7 +19,7 @@ def BubbleSort(ListToSort):
 UnsortedList = [random.randint(0, 100) for x in range(0, 10)] # Creates an unsorted list of random numbers
 SortedList = BubbleSort(UnsortedList) # Sorts the list using the bubble sort algorithm
 # Prints the unsorted and sorted list
-print("\033[0;33mThis is a bubble sort algorithm\033[0;33m")
+print("\n\033[0;33mThis is a bubble sort algorithm\033[0;33m")
 print(f"""\033[0;31mUnsorted list : {UnsortedList}\033[0;31m
 \033[0;32mSorted list : {SortedList}\033[0;32m""")
 print("""\033[0;33mA bubble sort loops through a list and moves items that are larger or equal than the next, up.
