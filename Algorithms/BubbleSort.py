@@ -1,7 +1,7 @@
 # Bubble sort algorithm
 import random
 
-# Bubble sort procedure
+# Bubble sort 
 def BubbleSort(ListToSort):
     List = ListToSort[:] # Copies the list to avoid changing the original
     for x in range(len(List)-1, 1, -1): # Makes multiple passes to ensure the list is sorted
@@ -14,6 +14,7 @@ def BubbleSort(ListToSort):
                 print(f"\033[0;33m{List}\033[0;33m : \033[0;33mNo swap\033[0;33m")
     print("\033[0;33m --- --- --- \033[0;33m")
     return List
+# 1 problem with this algorithm is it does not stop when fully sorted before all passes. Try to figure out a solution!
 
 # Main program
 UnsortedList = [random.randint(0, 100) for x in range(0, 10)] # Creates an unsorted list of random numbers
