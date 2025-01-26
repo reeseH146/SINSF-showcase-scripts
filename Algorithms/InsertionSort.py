@@ -1,7 +1,7 @@
 # Insertion sort
 import random
 
-# Insertion sort procedure
+# Insertion sort
 def InsertionSort(ListToSort):
     List = ListToSort[:] # Copies the list to avoid changing the original
     for x in range(1, len(List)): # Loops through the list
