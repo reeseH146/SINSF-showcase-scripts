@@ -1,11 +1,11 @@
 # Users can log into an account with limited amount of times to try it before being locked out.
 # Account username and passwords are stored in a dictionary.
 Accounts = {"Reese" : "s4a5x365/][;[.#/\/9-m09",
-            "Sam" : "HelloWorld",
-            "John" : "John",
-            "Ralphs" : "ItzGrannyz4DaWin",
-            "Zeke" : "password"
-            "Advin" : "Advin1"}
+                            "Sam" : "HelloWorld",
+                            "John" : "John",
+                            "Ralphs" : "ItzGrannyz4DaWin",
+                            "Zeke" : "password",
+                            "Advin" : "Advin1"}
 
 def LogIn():
     Correct = False
