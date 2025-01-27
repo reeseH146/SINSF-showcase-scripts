@@ -1,6 +1,6 @@
 # A series of animations the program can play which can be played
 import pygame as pg
-from pygame.locals import *
+from pygame.locals import * # type: ignore
 pg.init()
 import PGUI
 
@@ -258,9 +258,9 @@ AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniTest = Animation(SSTest, AniTestLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
 """
-SSBounceBall = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png")
+SSBounceBall = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png") # type: ignore
 AniBounceBall = Animation(SSBounceBall, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10, True) 
-SSTrigWave = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png")
+SSTrigWave = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png") # type: ignore
 AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10)
 """
 
