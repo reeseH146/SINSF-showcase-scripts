@@ -39,7 +39,7 @@ Position update
  - Animation.LocUpdate() called to update location, based on user input or program calculated location 
 """
 class Animation:
-    def __init__(self, SSheet, Loc : [], Size : (), Speed : float, Increment : float, SpeedChange : float, MaxFrame : int, Move = False):
+    def __init__(self, SSheet, Loc : list, Size : tuple, Speed : float, Increment : float, SpeedChange : float, MaxFrame : int, Move = False):
         # SSheet and attributes
         self.SSheet = SSheet # Sprite sheet
         self.Loc = Loc # Location of the animation object
@@ -128,11 +128,12 @@ class Animation:
     def PBSpeedUpdate(self, IncrDecr):
         if IncrDecr: # True for increasing
             self.Increment += self.SpeedChange
-            print(f"Speed increased by {self.SpeedChange} to {self.Increment}")
+            print(f"Speed increased by {self.SpeedChange} to {self.Increment:.4f}")
         else: # False for decreasing
-            if 0 <= (self.Increment - self.SpeedChange):
-                self.Increment -= self.SpeedChange
-                print(f"Speed decreased by {self.SpeedChange} to {self.Increment}")
+            self.Increment -= self.SpeedChange
+            if self.Increment < 0:
+                self.Increment = 0
+            print(f"Speed decreased by {self.SpeedChange} to {self.Increment:.4f}")
 
 # --- Main Menu ---
 def MainMenu():
@@ -237,7 +238,7 @@ ACCENTCOLOUR = (147, 147, 158)
 TEXTCOLOUR = (255, 255, 255)
 
 ## Game loading screen while other parts of the program load, there are some parts that should be in other section but is necessary for the loading screen to work
-Icon = pg.image.load("SpriteSheets\KES.png") # Loads image used for program icon
+Icon = pg.image.load(r"Animation demonstration\SpriteSheets\KES.png") # type: ignore # Loads image used for program icon
 WellcomeMsg = PGUI.TextGen(50, "Welcome to the animation demonstration", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
 pg.display.set_icon(Icon) # Sets loaded image of KES to window icon
 pg.display.set_caption("Animation Demonstration") # Sets window caption of what this program is to the user
@@ -249,7 +250,7 @@ pg.display.update() # Updates the differences in the window since last update/cr
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
 ## Animation section - Loads sprite sheets and assigns it to an animation class to process the sprite sheet and animate it
-SSTest = pg.image.load("SpriteSheets\pixil-frame-0 (2).png")
+SSTest = pg.image.load(r"Animation demonstration\SpriteSheets\pixil-frame-0 (2).png")
 AniTestLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
 AniTestSpeed = 15 # D15 - The distance the animation object can travel
@@ -257,9 +258,9 @@ AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniTest = Animation(SSTest, AniTestLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
 """
-SSBounceBall = pg.image.load("SpriteSheets\SSWave.png")
+SSBounceBall = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png")
 AniBounceBall = Animation(SSBounceBall, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10, True) 
-SSTrigWave = pg.image.load("SpriteSheets\SSWave.png")
+SSTrigWave = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png")
 AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10)
 """
 
