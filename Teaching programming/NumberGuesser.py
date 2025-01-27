@@ -29,7 +29,7 @@ for Attempt in range(Attempts, 0, -1):
         # Tells the user if the number is higher or lower
         Position = "higher" if Guess < Number else "lower"
         print(f"""\033[0;31mSorry, the number you guessed is incorrect. You have {Attempt - 1} attempts left.\033[0;31m
-The number to guss is {Position} than your guess of {Guess}.""")
+The number to guess is {Position} than your guess of {Guess}.""")
 # Returns message depending on whether user guessed correctly
 if Guessed:
     print("\033[0;32mYou have won the guessing game!.\033[0;32m")
