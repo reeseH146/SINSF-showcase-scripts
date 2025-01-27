@@ -1,3 +1,4 @@
+#This is fizzbuss. Takes one parameter, `x` that is the number to count up to. For multiples of 3 and 5 it outputs, "Fizz Buzz".For multiples of 3 only it outputs, "Fizz". For multiples of 5 only it outputs, "Buzz". For any other number it outputs the number.
 def fizzbus():
     x = int(input("Enter a number: "))
     for i in range (x+1):
@@ -14,15 +15,14 @@ def fizzbus():
         else:
             print (i)
 
-#Cost problem
+#Cost problem, You enter an amount of people, the cost is people times 15 and if the people is above or equal to 6 then cost will be reduced by 5
 def price (people):
     cost = people * 15
     if people >= 6:
         cost = cost - 5
     print (cost)
-    return cost
 
-#Resteraunt problem
+#Resteraunt, you enter the price you have to pay. People will take turns and pay their bill until the total price is 0.
 def resteraunt():
     pricex = float(input("Enter the price: "))
     while pricex != 0:
@@ -34,7 +34,7 @@ def resteraunt():
             break
     print ("Bill paid, thank you!")
 
-#Character problem
+#Character problem, you enter alphanumerical text then it turns if it is lower case or upper case or a mix between each.
 def wording ():
     word = str(input("Enter a word: "))
     if word == word.upper():
@@ -45,8 +45,8 @@ def wording ():
         print ("A bit of both!")
 
 
+#Checkes the array and see how many number of colours and counts for each colour there is.
 def array():
-    #Creating an array
     array = ["Red", "Blue", "Green", "Yellow", "Blue", "Green", "Yellow", "Red"]
     blue_counter = 0
     red_counter = 0
@@ -68,6 +68,7 @@ def array():
             print ("Red counters:", red_counter)
     print ("I cannot be asked to print the final result so you will see them incrementing to the final value instead")
 
+#Binary search code
 def bigman():
     group = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     found = False
@@ -91,6 +92,7 @@ def bigman():
     else:
         print("Not found")
 
+#Bubblesort code
 def bubblesort():
     presidents = ["Obama", "Trump", "Biden", "Boris", "Rishi", "Starmer"]
     swapped = True
@@ -105,6 +107,7 @@ def bubblesort():
                 presidents[i+1] = temp
                 swapped = True
 
+#Program which calculates total pay based on experience and miles
 def salary(experience, miles):
     if experience < 2:
         totalpay = 150 + (0.45*miles)
@@ -117,6 +120,7 @@ def salary(experience, miles):
         print(totalpay)
 
 
+#You enter a number, this will be in bytes and you can convert it to GB, MB, KB or just bytes it self.
 def calculates():
     number = int(input("Enter the value in bytes: "))
     measurement = str(input("Enter what form you want it in: ")).upper()
