@@ -5,10 +5,10 @@ import random
 def LinearSearch(ListToSearch, SearchItem):
     Count = 0
     Indexes = []
-    Start = ""
-    End = ""
+    # Loops through list
     for x in range(len(ListToSearch)):
         print("\033[0;31m --- --- --- \033[0;31m")
+        # Checks if current item in list is what it was looking for
         if ListToSearch[x] == SearchItem:
             Count += 1
             Indexes.append(x)
