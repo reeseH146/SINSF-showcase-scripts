@@ -4,7 +4,8 @@ Accounts = {"Reese" : "s4a5x365/][;[.#/\/9-m09",
             "Sam" : "HelloWorld",
             "John" : "John",
             "Ralphs" : "ItzGrannyz4DaWin",
-            "Zeke" : "password"}
+            "Zeke" : "password"
+            "Advin" : "Advin1"}
 
 def LogIn():
     Correct = False
