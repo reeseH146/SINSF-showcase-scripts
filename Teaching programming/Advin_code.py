@@ -159,3 +159,5 @@ def palindromechecker():
     else:
         print("The word is not a palindrome")
 
+
+
