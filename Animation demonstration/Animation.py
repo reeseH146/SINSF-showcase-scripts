@@ -167,18 +167,18 @@ def MainMenu():
                 MousePosition = pg.mouse.get_pos()
                 # Brings user to game which showcases the animations depending on which one they selected
                 if TestText.positionCheck(MousePosition):
-                    print(1)
-                    MainGame()
+                    print("Rainbow animation chosen")
+                    MainGame(AniTest)
                 elif BallText.positionCheck(MousePosition):
-                    print(2)
-                    MainGame()
+                    print("Ball bounce animation chosen")
+                    MainGame(AniBounceBall)
                 elif WaveText.positionCheck(MousePosition):
-                    print(3)
-                    MainGame()
+                    print("Trig waves animation chosen")
+                    MainGame(AniTrigWave)
         Clock.tick(60)
 
 # --- Main Game ---
-def MainGame():
+def MainGame(ChosenAnimation):
     ## Makes some checks and updates the window to show information to the user
     pg.display.update()
     Running = True
@@ -201,29 +201,30 @@ def MainGame():
             elif Events[K_ESCAPE]: # Returns back to main menu
                 MainMenu()
             elif Events[K_TAB]: # Brings animation object to the center of the screen
-                AniTest.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])#, False, [32, 32])
+                ChosenAnimation.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])#, False, [32, 32])
             # Changes position of the animation object based on direction
-            if Events[K_w]:
-                AniTest.LocUpdate("w")
-                print("Moved up")
-            if Events[K_a]:
-                AniTest.LocUpdate("a")
-                print("Moved left")
-            if Events[K_s]:
-                AniTest.LocUpdate("s")
-                print("Moved down")
-            if Events[K_d]:
-                AniTest.LocUpdate("d")
-                print("Moved right")
+            if ChosenAnimation.Move:
+                if Events[K_w]:
+                    ChosenAnimation.LocUpdate("w")
+                    print("Moved up")
+                if Events[K_a]:
+                    ChosenAnimation.LocUpdate("a")
+                    print("Moved left")
+                if Events[K_s]:
+                    ChosenAnimation.LocUpdate("s")
+                    print("Moved down")
+                if Events[K_d]:
+                    ChosenAnimation.LocUpdate("d")
+                    print("Moved right")
             # Changes the speed which the animation plays at
             if Events[K_LEFT]:
-                AniTest.PBSpeedUpdate(False) # Decreases animation playback speed
+                ChosenAnimation.PBSpeedUpdate(False) # Decreases animation playback speed
             elif Events[K_RIGHT]:
-                AniTest.PBSpeedUpdate(True) # Increases animation playback speed
+                ChosenAnimation.PBSpeedUpdate(True) # Increases animation playback speed
         # Updates the sprite
         Window.fill(MAINCOLOUR)
         pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
-        AniTest.AniUpdate()
+        ChosenAnimation.AniUpdate()
         pg.display.update()
         Clock.tick(60)
 
@@ -250,19 +251,26 @@ WellcomeMsg.Render(Window) # Places a welcome message onto the window for the us
 pg.display.update() # Updates the differences in the window since last update/creation so user can see changes
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
-# TODO : Change The Values Here To Experiment With Different Animations
 ## Animation section - Loads sprite sheets and assigns it to an animation class to process the sprite sheet and animate it
 SSTest = pg.image.load(r"Animation demonstration\SpriteSheets\Rainbow.png")
 SSBall = pg.image.load(r"Animation demonstration\SpriteSheets\BounceBall.png")
 SSWave = pg.image.load(r"Animation demonstration\SpriteSheets\TrigGraphs.png")
 AniLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
+# TODO : AniTest Animation Values
 AniTestSpeed = 15 # D15 - The distance the animation object can travel
 AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
-### Ball Animation values and stuff
+# TODO : BounceBall Animation Values
+AniBallSpeed = 15 # D15 - The distance the animation object can travel
+AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
+AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniBounceBall = Animation(SSBall, AniLoc, (91, 91), 15, 10, 0.1, 7, True) 
+# TODO : TrigWaves Animation Values
+AniWaveSpeed = 15 # D15 - The distance the animation object can travel
+AniWaveIncrement = 0.1 # D0.1 - Rate of change of animation frames
+AniWaveSpeedChange = 0.01 #D0.01 - Step in change of Increment
 AniTrigWave =  Animation(SSWave, AniLoc, (540, 540), 15,10, 0.1, 106)
 
 ## Loads game assets and processes (input checking interval, text)
