@@ -133,3 +133,16 @@ def calculates():
     elif measurement == "BYTES":
         value = number
     print (value)
+
+#You can call the function, enter a denary number and it will output that number in binary
+def toBinary():
+    num = int(input("Enter a number: "))
+    total = 0
+    temp = ""
+    while num > 0:
+        x = num % 2
+        temp = str(0 if x==0 else 1) + temp
+        num = num // 2
+
+    print(temp) 
+
