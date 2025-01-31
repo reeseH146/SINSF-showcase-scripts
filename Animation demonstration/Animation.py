@@ -138,6 +138,7 @@ class Animation:
 
 # --- Main Menu ---
 def MainMenu():
+    pg.event.set_allowed(K_ESCAPE)
     # Loads the main menu visual assets and interactive assets
     Window.fill(MAINCOLOUR)
     pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
@@ -199,6 +200,7 @@ def MainGame(ChosenAnimation):
                 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
                 quit()
             elif Events[K_ESCAPE]: # Returns back to main menu
+                pg.event.set_blocked(K_ESCAPE)
                 MainMenu()
             elif Events[K_TAB]: # Brings animation object to the center of the screen
                 ChosenAnimation.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])#, False, [32, 32])
@@ -266,12 +268,12 @@ AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedCha
 AniBallSpeed = 15 # D15 - The distance the animation object can travel
 AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniBounceBall = Animation(SSBall, AniLoc, (91, 91), 15, 10, 0.1, 7, True) 
+AniBounceBall = Animation(SSBall, AniLoc, (91, 91), AniBallSpeed, 10, AniBallSpeedChange, 7, True) 
 # TODO : TrigWaves Animation Values
 AniWaveSpeed = 15 # D15 - The distance the animation object can travel
-AniWaveIncrement = 0.1 # D0.1 - Rate of change of animation frames
-AniWaveSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniTrigWave =  Animation(SSWave, AniLoc, (540, 540), 15,10, 0.1, 106)
+AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
+AniWaveSpeedChange = 0.1 #D0.01 - Step in change of Increment
+AniTrigWave =  Animation(SSWave, AniLoc, (540, 540), AniWaveSpeed, 0.1, AniWaveSpeedChange, 106)
 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
@@ -292,3 +294,7 @@ pg.display.update() # Updates the window so that user can see changes from previ
 pg.time.wait(700) # Pauses the program for 0.7s
 pg.quit() # Exits pygame
 print(f"{'':-^42}\n{' Program closed : Thank you for playing ':-^42}\n{'':-^42}") # Cursed mono line alignment
+
+# TODO : Rename animation class variables
+# TODO : Fix animation spritesheets
+# TODO : Edit comments
