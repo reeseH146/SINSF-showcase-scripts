@@ -68,6 +68,7 @@ class Animation:
         if self.Frame > self.MaxFrame: # Checks if frame is above total sprites and resets if so
             self.Frame = 0
         self.FrameCounter = PGUI.TextGen(40, f"{int(self.Frame)}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
+        self.rect.center = (self.Loc[0], self.Loc[1])
         # Updates Window and animation frame
         Window.blit(self.Image, self.rect)
         self.FrameCounter.Render(Window)
@@ -140,16 +141,11 @@ def MainMenu():
     # Loads the main menu visual assets and interactive assets
     Window.fill(MAINCOLOUR)
     pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
-    AniTest.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])
-    AniTest.AniUpdate()
+    TestText.render(Window)
+    BallText.render(Window)
+    WaveText.render(Window)
     MenuTitle.Render(Window)
     pg.display.update()
-    """
-    ATestBTN.render()
-    AWaveBTN.render()
-    ABounceBallBTN.render()
-    ATrigWaveBTN.render()
-    """
     Running = True
     while Running:
         # Loops through the event queue checking for any events, mainly user input
@@ -169,10 +165,15 @@ def MainMenu():
             elif (event.type == MOUSEBUTTONDOWN) and (pg.mouse.get_pressed()[0]):
                 # Grabs the position of the mouse to check if it is within any buttons
                 MousePosition = pg.mouse.get_pos()
-                # Brings user to a tutorial page which shows how the program works and how 2D animation works using sprite strip
-                """"""
                 # Brings user to game which showcases the animations depending on which one they selected
-                if AniTest.PosCheck(MousePosition):
+                if TestText.positionCheck(MousePosition):
+                    print(1)
+                    MainGame()
+                elif BallText.positionCheck(MousePosition):
+                    print(2)
+                    MainGame()
+                elif WaveText.positionCheck(MousePosition):
+                    print(3)
                     MainGame()
         Clock.tick(60)
 
@@ -249,25 +250,29 @@ WellcomeMsg.Render(Window) # Places a welcome message onto the window for the us
 pg.display.update() # Updates the differences in the window since last update/creation so user can see changes
 pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
+# TODO : Change The Values Here To Experiment With Different Animations
 ## Animation section - Loads sprite sheets and assigns it to an animation class to process the sprite sheet and animate it
-SSTest = pg.image.load(r"Animation demonstration\SpriteSheets\pixil-frame-0 (2).png")
-AniTestLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
+SSTest = pg.image.load(r"Animation demonstration\SpriteSheets\Rainbow.png")
+SSBall = pg.image.load(r"Animation demonstration\SpriteSheets\BounceBall.png")
+SSWave = pg.image.load(r"Animation demonstration\SpriteSheets\TrigGraphs.png")
+AniLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
 AniTestSpeed = 15 # D15 - The distance the animation object can travel
 AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniTest = Animation(SSTest, AniTestLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
-"""
-SSBounceBall = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png") # type: ignore
-AniBounceBall = Animation(SSBounceBall, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10, True) 
-SSTrigWave = pg.image.load(r"Animation demonstration\SpriteSheets\SSWave.png") # type: ignore
-AniTrigWave =  Animation(SSTrigWave, [WINSIZE[0] // 2, WINSIZE[0] // 2], (???), 10, 0.1, 10)
-"""
+AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
+### Ball Animation values and stuff
+AniBounceBall = Animation(SSBall, AniLoc, (91, 91), 15, 10, 0.1, 7, True) 
+AniTrigWave =  Animation(SSWave, AniLoc, (540, 540), 15,10, 0.1, 106)
 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
 ExitMSG = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
 MenuTitle = PGUI.TextGen(40, "Please select an animation", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, 35) # Top centre of window
+TestText = PGUI.TextButton(50, "Rainbow square Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (3/6) - 100) # Top of 3 in centre
+BallText = PGUI.TextButton(50, "Bouncing ball Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (4/6) - 100) # Middle of 3 in centre
+WaveText = PGUI.TextButton(50, "Trig wave Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (5/6) - 100) # Bottom of 3 in centre
+
 
 ## Main game
 MainMenu()
