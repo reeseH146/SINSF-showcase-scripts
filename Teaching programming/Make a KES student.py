@@ -31,11 +31,11 @@ Zeke = {"size" : ["regular"],
        "style" : ["skibidi"]}
 Zekecounter = 0
 #Advin Varghese
-Advin = {"size" : ["small"],
-       "fattness" : ["fatty"],
-       "aura" : ["0"],
-       "IQ" : ["0"],
-       "style" : ["ugly"]}
+Advin = {"size" : ["regular"],
+       "fattness" : ["regular"],
+       "aura" : ["69"],
+       "IQ" : ["69"],
+       "style" : ["skibidi"]}
 Advincounter=0
 #Main program
 ready = input("Are you ready to make a KES student!? (y/n) ")
@@ -45,8 +45,8 @@ elif ready == "y":
     print("Okay lets begin!")
     size = input("Enter the persons size-hint(small, regular or large) ")
     fattness = input("Enter the persons fattness-hint(thin, regular or fatty) ")
-    aura = input("Enter the persons aura-hint(0, 100 or 1000) ")
-    IQ = input("Enter the persons IQ-hint(0, 100 or 1M) ")
+    aura = input("Enter the persons aura-hint(0, 100, 69 or 1000) ")
+    IQ = input("Enter the persons IQ-hint(0, 69, 100 or 1M) ")
     style = input("Enter the persons dress sense-hint(ugly, average or skibidi) ")
 #output a student
 if size in Sam["size"]:

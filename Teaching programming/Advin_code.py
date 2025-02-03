@@ -146,3 +146,18 @@ def toBinary():
 
     print(temp) 
 
+#Allows you to enter a word and checks if the that word is a palindrome(its the same when it is spelled backwards)
+def palindromechecker():
+    word = str(input("Enter a word: "))
+    rev_word = ""
+    for i in range(len(word)-1, -1, -1):
+        rev_word += word[i]
+    print(rev_word)
+    
+    if word == rev_word:
+        print("The word is a palindrome")
+    else:
+        print("The word is not a palindrome")
+
+
+
