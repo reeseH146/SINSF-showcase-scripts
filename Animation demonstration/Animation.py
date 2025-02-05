@@ -70,8 +70,8 @@ class Animation:
         self.FrameCounter = PGUI.TextGen(40, f"{int(self.Frame)}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
         self.rect.center = (self.Loc[0], self.Loc[1])
         # Updates Window and animation frame
-        Window.blit(self.Image, self.rect)
         self.FrameCounter.Render(Window)
+        Window.blit(self.Image, self.rect)
 
     """ Updates position of animation object
     Checks the type of movement and whether movement is enabled
@@ -104,9 +104,6 @@ class Animation:
             self.Loc[1] = ((WINSIZE[1] - 10) - (self.Size[1] // 2)) # Sets position to just touch bottom y boundary
         # Updates Window and animation in new position
         self.rect.center = (self.Loc[0], self.Loc[1])
-        Window.fill(MAINCOLOUR)
-        pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
-        Window.blit(self.Image, self.rect)
         print(f"Location updated : {self.Loc}")
 
     """ Checks for user input on animation object
@@ -138,7 +135,6 @@ class Animation:
 
 # --- Main Menu ---
 def MainMenu():
-    pg.event.set_allowed(K_ESCAPE)
     # Loads the main menu visual assets and interactive assets
     Window.fill(MAINCOLOUR)
     pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
@@ -147,6 +143,7 @@ def MainMenu():
     WaveText.render(Window)
     MenuTitle.Render(Window)
     pg.display.update()
+    pg.event.set_allowed(K_ESCAPE)
     Running = True
     while Running:
         # Loops through the event queue checking for any events, mainly user input
@@ -179,7 +176,9 @@ def MainMenu():
         Clock.tick(60)
 
 # --- Main Game ---
-def MainGame(ChosenAnimation):
+def MainGame(TransferedAnimation):
+    ChosenAnimation = TransferedAnimation
+    ChosenAnimation.LocUpdate("", [WINSIZE[0] // 2, WINSIZE[1] // 2])#, False, [32, 32])
     ## Makes some checks and updates the window to show information to the user
     pg.display.update()
     Running = True
@@ -255,8 +254,8 @@ pg.time.wait(600) # Waits 600ms so the user can read the welcome script
 
 ## Animation section - Loads sprite sheets and assigns it to an animation class to process the sprite sheet and animate it
 SSTest = pg.image.load(r"Animation demonstration\SpriteSheets\Rainbow.png")
-SSBall = pg.image.load(r"Animation demonstration\SpriteSheets\BounceBall.png")
-SSWave = pg.image.load(r"Animation demonstration\SpriteSheets\TrigGraphs.png")
+SSBall = pg.image.load(r"Animation demonstration\SpriteSheets\BounceBall.png").convert_alpha()
+SSWave = pg.image.load(r"Animation demonstration\SpriteSheets\TrigGraphs.png").convert_alpha()
 AniLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
 # TODO : AniTest Animation Values
@@ -268,7 +267,7 @@ AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedCha
 AniBallSpeed = 15 # D15 - The distance the animation object can travel
 AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniBounceBall = Animation(SSBall, AniLoc, (91, 91), AniBallSpeed, 10, AniBallSpeedChange, 7, True) 
+AniBounceBall = Animation(SSBall, AniLoc, (100, 250), AniBallSpeed, 0.1, AniBallSpeedChange, 30, True) 
 # TODO : TrigWaves Animation Values
 AniWaveSpeed = 15 # D15 - The distance the animation object can travel
 AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
