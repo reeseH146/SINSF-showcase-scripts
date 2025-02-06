@@ -267,7 +267,7 @@ AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedCha
 AniBallSpeed = 15 # D15 - The distance the animation object can travel
 AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniBounceBall = Animation(SSBall, AniLoc, (100, 250), AniBallSpeed, 0.1, AniBallSpeedChange, 30, True) 
+AniBounceBall = Animation(SSBall, AniLoc, (100, 250), AniBallSpeed, 0.1, AniBallSpeedChange, 7, True) 
 # TODO : TrigWaves Animation Values
 AniWaveSpeed = 15 # D15 - The distance the animation object can travel
 AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
