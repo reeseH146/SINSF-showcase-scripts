@@ -70,8 +70,8 @@ class Animation:
         self.FrameCounter = PGUI.TextGen(40, f"{int(self.Frame)}", TEXTCOLOUR, SUBCOLOUR, 11, 11, True, False)
         self.rect.center = (self.Loc[0], self.Loc[1])
         # Updates Window and animation frame
-        self.FrameCounter.Render(Window)
         Window.blit(self.Image, self.rect)
+        self.FrameCounter.Render(Window)
 
     """ Updates position of animation object
     Checks the type of movement and whether movement is enabled
@@ -242,7 +242,7 @@ TEXTCOLOUR = (255, 255, 255)
 
 ## Game loading screen while other parts of the program load, there are some parts that should be in other section but is necessary for the loading screen to work
 Icon = pg.image.load(r"Animation demonstration\SpriteSheets\KES.png") # type: ignore # Loads image used for program icon
-WellcomeMsg = PGUI.TextGen(50, "Welcome to the animation demonstration", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
+WellcomeMsg = PGUI.TextGen(70, "Welcome to the animation demonstration", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
 pg.display.set_icon(Icon) # Sets loaded image of KES to window icon
 pg.display.set_caption("Animation Demonstration") # Sets window caption of what this program is to the user
 Window = pg.display.set_mode(WINSIZE) # Creates the window
@@ -267,7 +267,7 @@ AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedCha
 AniBallSpeed = 15 # D15 - The distance the animation object can travel
 AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniBounceBall = Animation(SSBall, AniLoc, (100, 250), AniBallSpeed, 0.1, AniBallSpeedChange, 7, True) 
+AniBounceBall = Animation(SSBall, AniLoc, (100, 157), AniBallSpeed, 0.1, AniBallSpeedChange, 7, True) 
 # TODO : TrigWaves Animation Values
 AniWaveSpeed = 15 # D15 - The distance the animation object can travel
 AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
@@ -276,11 +276,11 @@ AniTrigWave =  Animation(SSWave, AniLoc, (1600, 900), AniWaveSpeed, 0.1, AniWave
 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
-ExitMSG = PGUI.TextGen(50, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
-MenuTitle = PGUI.TextGen(40, "Please select an animation", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, 35) # Top centre of window
-TestText = PGUI.TextButton(50, "Rainbow square Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (3/6) - 100) # Top of 3 in centre
-BallText = PGUI.TextButton(50, "Bouncing ball Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (4/6) - 100) # Middle of 3 in centre
-WaveText = PGUI.TextButton(50, "Trig wave Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (5/6) - 100) # Bottom of 3 in centre
+ExitMSG = PGUI.TextGen(80, "Thank you for playing", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, WINSIZE[1] // 2) # Centre of window
+MenuTitle = PGUI.TextGen(80, "Please select an animation", TEXTCOLOUR, SUBCOLOUR, WINSIZE[0] // 2, 75) # Top centre of window
+TestText = PGUI.TextButton(70, "Rainbow square Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (3/6) - 110) # Top of 3 in centre
+BallText = PGUI.TextButton(70, "Bouncing ball Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (4/6) - 100) # Middle of 3 in centre
+WaveText = PGUI.TextButton(70, "Trig wave Animation", True, [SUBCOLOUR, TEXTCOLOUR], WINSIZE[0] // 2, WINSIZE[1] * (5/6) - 90) # Bottom of 3 in centre
 
 
 ## Main game
