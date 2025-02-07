@@ -224,8 +224,8 @@ def MainGame(TransferedAnimation):
                 ChosenAnimation.PBSpeedUpdate(True) # Increases animation playback speed
         # Updates the sprite
         Window.fill(MAINCOLOUR)
-        pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
         ChosenAnimation.AniUpdate()
+        pg.draw.rect(Window, SUBCOLOUR, (0, 0, WINSIZE[0], WINSIZE[1]), 10)
         pg.display.update()
         Clock.tick(60)
 
@@ -233,7 +233,7 @@ def MainGame(TransferedAnimation):
 print(f"{'':-^42}\n{' Program loaded : Please enjoy playing  ':-^42}\n{'':-^42}") # Cursed mono line alignment
 
 ## Default values making it easier to track and reuse variables across this script
-WINSIZE = (1920 * 0.65, 1080 * 0.65)
+WINSIZE = (1920 * 0.8, 1080 * 0.8)
 Clock = pg.time.Clock()
 MAINCOLOUR = (255, 191, 70)
 SUBCOLOUR = (87, 87, 91)
@@ -271,8 +271,8 @@ AniBounceBall = Animation(SSBall, AniLoc, (100, 250), AniBallSpeed, 0.1, AniBall
 # TODO : TrigWaves Animation Values
 AniWaveSpeed = 15 # D15 - The distance the animation object can travel
 AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
-AniWaveSpeedChange = 0.1 #D0.01 - Step in change of Increment
-AniTrigWave =  Animation(SSWave, AniLoc, (540, 540), AniWaveSpeed, 0.1, AniWaveSpeedChange, 106)
+AniWaveSpeedChange = 0.001 #D0.01 - Step in change of Increment
+AniTrigWave =  Animation(SSWave, AniLoc, (1600, 900), AniWaveSpeed, 0.1, AniWaveSpeedChange, 30)
 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
