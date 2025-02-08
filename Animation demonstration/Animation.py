@@ -39,17 +39,17 @@ Position update
  - Animation.LocUpdate() called to update location, based on user input or program calculated location 
 """
 class Animation:
-    def __init__(self, SSheet, Loc : list, Size : tuple, Speed : float, Increment : float, SpeedChange : float, MaxFrame : int, Move = False):
+    def __init__(self, SSheet, Loc : list, Size : tuple, Dist : int, Increment : float, IncrementChange : float, MaxFrame : int, Move = False):
         # SSheet and attributes
         self.SSheet = SSheet # Sprite sheet
         self.Loc = Loc # Location of the animation object
         self.Size = Size # Array of the size of each frame
         self.Move = Move
         # Animation attributes
-        self.Speed = Speed
+        self.Dist = Dist
         self.Frame = 0
         self.Increment = Increment
-        self.SpeedChange = SpeedChange
+        self.IncrementChange = IncrementChange
         self.MaxFrame = MaxFrame
         self.Image = pg.Surface(self.Size)
         self.rect = self.Image.get_rect()
@@ -82,13 +82,13 @@ class Animation:
         # Makes checks to change position of animation object
         if self.Move: # Checks movement is enabled
             if Direction == "w": # Updates vertical position
-                self.Loc[1] -= self.Speed
+                self.Loc[1] -= self.Dist
             elif Direction == "a": # Updates horizontal position
-                self.Loc[0] -= self.Speed
+                self.Loc[0] -= self.Dist
             elif Direction == "s": # Updates vertical position
-                self.Loc[1] += self.Speed
+                self.Loc[1] += self.Dist
             elif Direction == "d": # Updates horizontal position
-                self.Loc[0] += self.Speed
+                self.Loc[0] += self.Dist
             elif Direction == "": # Changes position if movement enabled
                 self.Loc = Position
         elif Direction == "": # Changes position if movement disabled
@@ -125,13 +125,13 @@ class Animation:
     """
     def PBSpeedUpdate(self, IncrDecr):
         if IncrDecr: # True for increasing
-            self.Increment += self.SpeedChange
-            print(f"Speed increased by {self.SpeedChange} to {self.Increment:.4f}")
+            self.Increment += self.IncrementChange
+            print(f"Speed increased by {self.IncrementChange} to {self.Increment:.4f}")
         else: # False for decreasing
-            self.Increment -= self.SpeedChange
+            self.Increment -= self.IncrementChange
             if self.Increment < 0:
                 self.Increment = 0
-            print(f"Speed decreased by {self.SpeedChange} to {self.Increment:.4f}")
+            print(f"Speed decreased by {self.IncrementChange} to {self.Increment:.4f}")
 
 # --- Main Menu ---
 def MainMenu():
@@ -259,20 +259,20 @@ SSWave = pg.image.load(r"Animation demonstration\SpriteSheets\TrigGraphs.png").c
 AniLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 ### Test Animation values and stuff
 # TODO : AniTest Animation Values
-AniTestSpeed = 15 # D15 - The distance the animation object can travel
+AniTestDistSpeed = 15 # D15 - The distance the animation object can travel
 AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestSpeed, 0.1, AniTestSpeedChange, 10, True)
+AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestDistSpeed, AniTestIncrement, AniTestSpeedChange, 10, True)
 # TODO : BounceBall Animation Values
-AniBallSpeed = 15 # D15 - The distance the animation object can travel
+AniBallDistSpeed = 15 # D15 - The distance the animation object can travel
 AniBallIncrement = 0.1 # D0.1 - Rate of change of animation frames
 AniBallSpeedChange = 0.01 #D0.01 - Step in change of Increment
-AniBounceBall = Animation(SSBall, AniLoc, (100, 157), AniBallSpeed, 0.1, AniBallSpeedChange, 7, True) 
+AniBounceBall = Animation(SSBall, AniLoc, (100, 157), AniBallDistSpeed, AniBallIncrement, AniBallSpeedChange, 7, True) 
 # TODO : TrigWaves Animation Values
-AniWaveSpeed = 15 # D15 - The distance the animation object can travel
-AniWaveIncrement = 0.0000000000001 # D0.1 - Rate of change of animation frames
-AniWaveSpeedChange = 0.001 #D0.01 - Step in change of Increment
-AniTrigWave =  Animation(SSWave, AniLoc, (1600, 900), AniWaveSpeed, 0.1, AniWaveSpeedChange, 30)
+AniWaveDistSpeed = 15 # D15 - The distance the animation object can travel
+AniWaveIncrement = 0.1 # D0.1 - Rate of change of animation frames
+AniWaveSpeedChange = 0.01 #D0.01 - Step in change of Increment
+AniTrigWave =  Animation(SSWave, AniLoc, (1600, 900), AniWaveDistSpeed, AniWaveIncrement, AniWaveSpeedChange, 30)
 
 ## Loads game assets and processes (input checking interval, text)
 pg.key.set_repeat(200, 1000) # Sets the interval pygame checks the keyboard for new input and duration keys have to be pressed continuously to be considered held down
