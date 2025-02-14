@@ -10,7 +10,7 @@ Sam = {"size" : ["large"],
        "style" : ["average"]}
 Samcounter = 0
 #Reese He
-Reese ={"size" : ["rehular"],
+Reese ={"size" : ["regular"],
        "fattness" : ["regular"],
        "aura" : ["100"],
        "IQ" : ["0"],
