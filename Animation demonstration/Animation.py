@@ -261,7 +261,7 @@ AniLoc = [int(WINSIZE[0] // 2), int(WINSIZE[1] // 2)]
 # TODO : AniTest Animation Values
 AniTestDistSpeed = 15 # D15 - The distance the animation object can travel
 AniTestIncrement = 0.1 # D0.1 - Rate of change of animation frames
-AniTestSpeedChange = 0.01 #D0.01 - Step in change of Increment
+AniTestSpeedChange = 0.1 #D0.01 - Step in change of Increment
 AniTest = Animation(SSTest, AniLoc, (64, 64), AniTestDistSpeed, AniTestIncrement, AniTestSpeedChange, 10, True)
 # TODO : BounceBall Animation Values
 AniBallDistSpeed = 15 # D15 - The distance the animation object can travel

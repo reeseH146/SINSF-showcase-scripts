@@ -160,4 +160,4 @@ def palindromechecker():
         print("The word is not a palindrome")
 
 
-
+toBinary()
